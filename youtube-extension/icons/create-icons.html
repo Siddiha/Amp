@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Extension Icons</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎵 YouTube AI Music Agent Icon Generator</h1>
+  <p>Click the buttons to download the icons for the extension:</p>
+
+  <div>
+    <canvas id="icon16" width="16" height="16"></canvas>
+    <button onclick="downloadIcon(16)">Download 16x16</button>
+  </div>
+
+  <div>
+    <canvas id="icon48" width="48" height="48"></canvas>
+    <button onclick="downloadIcon(48)">Download 48x48</button>
+  </div>
+
+  <div>
+    <canvas id="icon128" width="128" height="128"></canvas>
+    <button onclick="downloadIcon(128)">Download 128x128</button>
+  </div>
+
+  <script>
+    // Draw icons on page load
+    window.onload = function() {
+      drawIcon(16);
+      drawIcon(48);
+      drawIcon(128);
+    };
+
+    function drawIcon(size) {
+      const canvas = document.getElementById('icon' + size);
+      const ctx = canvas.getContext('2d');
+
+      // Gradient background
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, size, size);
+
+      // Draw music note
+      ctx.fillStyle = 'white';
+      const noteSize = size * 0.6;
+      const x = size / 2;
+      const y = size / 2;
+
+      // Simple music note shape
+      ctx.beginPath();
+      ctx.arc(x - noteSize * 0.15, y + noteSize * 0.2, noteSize * 0.15, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillRect(x - noteSize * 0.03, y - noteSize * 0.4, noteSize * 0.1, noteSize * 0.6);
+
+      ctx.beginPath();
+      ctx.arc(x - noteSize * 0.03, y - noteSize * 0.4, noteSize * 0.15, 0, Math.PI, true);
+      ctx.fill();
+    }
+
+    function downloadIcon(size) {
+      const canvas = document.getElementById('icon' + size);
+      const link = document.createElement('a');
+      link.download = 'icon' + size + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube AI Music Agent - Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      opacity: 0.8;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border-radius: 8px;
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    input:focus {
+      border-color: white;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #f0f0f0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.success {
+      background: rgba(76, 175, 80, 0.3);
+      display: block;
+    }
+
+    .status.error {
+      background: rgba(244, 67, 54, 0.3);
+      display: block;
+    }
+
+    .info {
+      font-size: 12px;
+      opacity: 0.8;
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .info a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .shortcuts {
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .shortcut {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .key {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 11px;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      margin-top: 16px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎵 YouTube AI Music Agent</h1>
+  <p class="subtitle">Control YouTube with natural language!</p>
+
+  <div class="section">
+    <div class="section-title">⚙️ Configuration</div>
+    <div class="input-group">
+      <label for="api-key">Anthropic API Key</label>
+      <input
+        type="password"
+        id="api-key"
+        placeholder="sk-ant-api03-xxxxx..."
+      />
+      <p class="info">
+        Get your API key from
+        <a href="https://console.anthropic.com/settings/keys" target="_blank">Anthropic Console</a>
+      </p>
+    </div>
+    <button id="save-btn">Save Settings</button>
+    <div id="status" class="status"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">⌨️ Keyboard Shortcuts</div>
+    <div class="shortcuts">
+      <div class="shortcut">
+        <span>Focus command box</span>
+        <span class="key">K</span>
+      </div>
+      <div class="shortcut">
+        <span>Send command</span>
+        <span class="key">Enter</span>
+      </div>
+      <div class="shortcut">
+        <span>Close command box</span>
+        <span class="key">Esc</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">💡 Example Commands</div>
+    <div class="shortcuts">
+      <div>• "play lofi hip hop"</div>
+      <div>• "play something energetic"</div>
+      <div>• "I want to hear jazz"</div>
+      <div>• "play Taylor Swift"</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Made with 🎵 by AMP Team
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
