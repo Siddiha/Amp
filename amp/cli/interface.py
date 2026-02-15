@@ -1,10 +1,16 @@
 """AMP CLI interface — beautiful terminal UI."""
 
 import os
+import sys
 import time
 import subprocess
 import platform
 import shutil
+
+# Fix Windows console encoding for Unicode characters (Rich UI)
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import click
 from rich.console import Console
@@ -21,7 +27,7 @@ from amp.agent.amp_agent import AMPAgent
 from amp.utils.logger import setup_logging, get_logger
 
 logger = get_logger("cli")
-console = Console()
+console = Console(force_terminal=True)
 
 
 def ensure_spotify_running() -> bool:

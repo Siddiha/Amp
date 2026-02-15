@@ -1,0 +1,42 @@
+# AMP Configuration File
+# Copy this to amp-common.toml and customize
+
+[app]
+debug = false
+log_level = "INFO"
+# log_file = "amp.log"
+
+[spotify]
+redirect_uri = "http://localhost:8888/callback"
+cache_path = ".spotify_cache"
+# scopes = ["user-read-playback-state", "user-modify-playback-state", ...]
+
+[llm]
+# Default LLM provider: "openai", "claude", or "gemini"
+default_provider = "claude"
+
+# Anthropic Claude settings (primary)
+anthropic_model = "claude-sonnet-4-5-20250929"
+anthropic_max_tokens = 300
+anthropic_temperature = 0.7
+
+# OpenAI settings (optional)
+openai_model = "gpt-4-turbo-preview"
+openai_max_tokens = 300
+openai_temperature = 0.7
+
+# Google Gemini settings
+gemini_model = "gemini-1.5-flash"
+gemini_max_tokens = 300
+
+[memory]
+database_path = "amp_data.db"
+max_conversation_history = 20
+max_listening_history = 1000
+cache_ttl_seconds = 300
+
+[cli]
+theme = "dark"
+show_now_playing = true
+show_progress_bar = true
+auto_refresh_interval = 5
