@@ -10,6 +10,12 @@ ytmusicapi>=1.8.0
 # AI (Anthropic Claude)
 anthropic>=0.39.0
 
+# AI (Google Gemini — free tier)
+google-genai>=1.0.0
+
+# AI (Groq — free, fast Llama 3)
+groq>=1.0.0
+
 # Beautiful Terminal UI
 rich==13.7.0
 prompt-toolkit==3.0.43

@@ -53,8 +53,12 @@ class LLMConfig:
 
     # Google Gemini (optional)
     google_api_key: str = ""
-    gemini_model: str = "gemini-1.5-flash"
+    gemini_model: str = "gemini-2.0-flash"
     gemini_max_tokens: int = 300
+
+    # Groq (free, fast — Llama 3)
+    groq_api_key: str = ""
+    groq_model: str = "llama-3.3-70b-versatile"
 
 
 @dataclass
@@ -164,6 +168,7 @@ class AMPConfig:
         self.llm.anthropic_api_key = os.getenv("ANTHROPIC_API_KEY", "")
         self.llm.openai_api_key = os.getenv("OPENAI_API_KEY", "")
         self.llm.google_api_key = os.getenv("GOOGLE_API_KEY", "")
+        self.llm.groq_api_key = os.getenv("GROQ_API_KEY", "")
 
         if os.getenv("AMP_LLM_PROVIDER"):
             self.llm.default_provider = os.getenv("AMP_LLM_PROVIDER")
@@ -193,6 +198,8 @@ class AMPConfig:
             errors.append("OPENAI_API_KEY is required when using OpenAI")
         elif provider == "gemini" and not self.llm.google_api_key:
             errors.append("GOOGLE_API_KEY is required when using Gemini")
+        elif provider == "groq" and not self.llm.groq_api_key:
+            errors.append("GROQ_API_KEY is required when using Groq")
 
         return errors
 

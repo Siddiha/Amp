@@ -1,9 +1,9 @@
-"""AMP AI Agent — understands commands and controls Spotify via Claude."""
+"""AMP AI Agent — understands commands and controls music via AI."""
 
 from typing import List, Dict
 
+from amp.config import get_config
 from amp.spotify.player import SpotifyPlayer
-from amp.llm.llm_provider import ClaudeProvider
 from amp.utils.logger import get_logger
 
 logger = get_logger("agent")
@@ -34,7 +34,19 @@ If unsure, ask for clarification. Be concise in responses."""
 
     def __init__(self, spotify: SpotifyPlayer):
         self.spotify = spotify
-        self.llm = ClaudeProvider()
+        config = get_config()
+        provider = config.llm.default_provider
+
+        if provider == "gemini":
+            from amp.llm.gemini_provider import GeminiProvider
+            self.llm = GeminiProvider()
+        elif provider == "groq":
+            from amp.llm.groq_provider import GroqProvider
+            self.llm = GroqProvider()
+        else:
+            from amp.llm.llm_provider import ClaudeProvider
+            self.llm = ClaudeProvider()
+
         self.history: List[Dict] = []
         logger.info("AMP Agent initialized")
 

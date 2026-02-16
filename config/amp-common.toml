@@ -13,7 +13,7 @@ cache_path = ".spotify_cache"
 
 [llm]
 # Default LLM provider: "openai", "claude", or "gemini"
-default_provider = "claude"
+default_provider = "gemini"
 
 # Anthropic Claude settings (primary)
 anthropic_model = "claude-sonnet-4-5-20250929"
@@ -26,7 +26,7 @@ openai_max_tokens = 300
 openai_temperature = 0.7
 
 # Google Gemini settings
-gemini_model = "gemini-1.5-flash"
+gemini_model = "gemini-2.0-flash"
 gemini_max_tokens = 300
 
 [memory]
