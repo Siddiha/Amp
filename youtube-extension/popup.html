@@ -60,7 +60,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"],
+    select {
       width: 100%;
       padding: 10px 12px;
       border: 2px solid rgba(255, 255, 255, 0.2);
@@ -72,7 +73,12 @@
       transition: all 0.2s;
     }
 
-    input:focus {
+    select {
+      cursor: pointer;
+    }
+
+    input:focus,
+    select:focus {
       border-color: white;
       background: white;
       box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
@@ -134,6 +140,19 @@
       text-decoration: underline;
     }
 
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+      background: rgba(76, 175, 80, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .shortcuts {
       font-size: 12px;
       line-height: 1.6;
@@ -167,18 +186,28 @@
 
   <div class="section">
     <div class="section-title">⚙️ Configuration</div>
+
     <div class="input-group">
-      <label for="api-key">Anthropic API Key</label>
+      <label for="provider">AI Provider</label>
+      <select id="provider">
+        <option value="gemini">Google Gemini (FREE) ✨</option>
+        <option value="claude">Anthropic Claude</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="api-key">API Key <span id="key-badge" class="badge">FREE</span></label>
       <input
         type="password"
         id="api-key"
-        placeholder="sk-ant-api03-xxxxx..."
+        placeholder="Paste your API key here..."
       />
-      <p class="info">
-        Get your API key from
-        <a href="https://console.anthropic.com/settings/keys" target="_blank">Anthropic Console</a>
+      <p class="info" id="key-info">
+        Get a free Gemini key at
+        <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a>
       </p>
     </div>
+
     <button id="save-btn">Save Settings</button>
     <div id="status" class="status"></div>
   </div>
@@ -204,10 +233,11 @@
   <div class="section">
     <div class="section-title">💡 Example Commands</div>
     <div class="shortcuts">
-      <div>• "play lofi hip hop"</div>
-      <div>• "play something energetic"</div>
-      <div>• "I want to hear jazz"</div>
-      <div>• "play Taylor Swift"</div>
+      <div>&bull; "play lofi hip hop"</div>
+      <div>&bull; "play something energetic"</div>
+      <div>&bull; "I want to hear jazz"</div>
+      <div>&bull; "play Taylor Swift"</div>
+      <div>&bull; "play chill study music"</div>
     </div>
   </div>
 

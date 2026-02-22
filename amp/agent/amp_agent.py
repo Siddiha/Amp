@@ -1,18 +1,19 @@
 """AMP AI Agent — understands commands and controls music via AI."""
 
-from typing import List, Dict
+from typing import List, Dict, Union
 
 from amp.config import get_config
 from amp.spotify.player import SpotifyPlayer
+from amp.spotify.youtube_player import YouTubePlayer
 from amp.utils.logger import get_logger
 
 logger = get_logger("agent")
 
 
 class AMPAgent:
-    """AI brain that understands natural language and controls Spotify."""
+    """AI brain that understands natural language and controls music."""
 
-    SYSTEM_PROMPT = """You are AMP, a friendly AI music assistant that controls Spotify. You understand natural language and help users with their music.
+    SPOTIFY_PROMPT = """You are AMP, a friendly AI music assistant that controls Spotify. You understand natural language and help users with their music.
 
 Your personality: Casual, music-loving, helpful. Use emojis sparingly.
 
@@ -32,8 +33,32 @@ When users give commands:
 
 If unsure, ask for clarification. Be concise in responses."""
 
-    def __init__(self, spotify: SpotifyPlayer):
-        self.spotify = spotify
+    YOUTUBE_PROMPT = """You are AMP, a friendly AI music assistant that opens YouTube Music in the browser. You understand natural language and help users find and play music.
+
+Your personality: Casual, music-loving, helpful. Use emojis sparingly.
+
+When users give commands:
+- "play X" -> use play_music with the query (opens YouTube Music in browser)
+- "pause/stop" -> use pause_music (reminds user to pause in browser)
+- "skip/next" -> use skip_track (reminds user to skip in browser)
+- "back/previous" -> use previous_track (reminds user to go back in browser)
+- "what's playing" -> use get_now_playing
+- "search X" -> use search_music
+- "volume X" -> use set_volume (reminds user to adjust volume in browser)
+- "queue X" -> use add_to_queue (searches and suggests the user add manually)
+- "recommend/suggest" -> use get_recommendations
+- "create playlist" -> use create_playlist (requires YouTube Music auth)
+- "like/save this" -> use save_current_track (requires YouTube Music auth)
+- "shuffle on/off" -> use toggle_shuffle (reminds user to toggle in browser)
+
+Note: YouTube Music playback runs in the browser, so pause/volume/skip require manual action in the browser tab.
+If unsure, ask for clarification. Be concise in responses."""
+
+    def __init__(self, player: Union[SpotifyPlayer, YouTubePlayer]):
+        self.spotify = player  # kept as 'spotify' for internal compatibility
+        self.SYSTEM_PROMPT = (
+            self.YOUTUBE_PROMPT if isinstance(player, YouTubePlayer) else self.SPOTIFY_PROMPT
+        )
         config = get_config()
         provider = config.llm.default_provider
 
