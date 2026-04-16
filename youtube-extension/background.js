@@ -130,9 +130,11 @@ chrome.runtime.onInstalled.addListener(async () => {
     await chrome.storage.sync.set({ provider: 'gemini' });
   }
 
-  // Open options if no API key yet
+  // Open popup if no API key yet
   const { apiKey } = await chrome.storage.sync.get(['apiKey']);
   if (!apiKey) {
-    chrome.runtime.openOptionsPage();
+    chrome.action.openPopup().catch(() => {
+      // openPopup() only works when Chrome is focused; silently ignore if it fails
+    });
   }
 });
