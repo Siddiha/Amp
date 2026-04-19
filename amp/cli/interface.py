@@ -6,13 +6,12 @@ import time
 import subprocess
 import platform
 import shutil
+from typing import Union
 
 # Fix Windows console encoding for Unicode characters (Rich UI)
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
-
-from typing import Union
 
 import click
 from rich.console import Console
