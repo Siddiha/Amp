@@ -214,6 +214,7 @@ def show_help():
 
 
 @click.command()
+@click.version_option(version=__version__, prog_name="AMP")
 @click.argument("command", nargs=-1, required=False)
 @click.option("--config", "config_path", default=None, help="Path to config TOML file")
 def main(command, config_path):
