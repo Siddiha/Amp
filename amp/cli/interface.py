@@ -12,6 +12,8 @@ if sys.platform == "win32":
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
+from typing import Union
+
 import click
 from rich.console import Console
 from rich.panel import Panel
@@ -124,7 +126,7 @@ def create_header() -> Panel:
     return Panel(title, box=box.ROUNDED, border_style="magenta")
 
 
-def create_now_playing(spotify: SpotifyPlayer) -> Panel:
+def create_now_playing(spotify: Union[SpotifyPlayer, YouTubePlayer]) -> Panel:
     """Create now playing display."""
     track = spotify.get_current_track()
     if track:
