@@ -18,9 +18,9 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
 from rich.prompt import Prompt
-from rich.markdown import Markdown
 from rich import box
 
+from amp import __version__
 from amp.config import init_config
 from amp.spotify.player import SpotifyPlayer
 from amp.spotify.youtube_player import YouTubePlayer
@@ -210,7 +210,7 @@ def show_help():
 
 [dim]Or just type naturally - AMP understands![/dim]
 """
-    console.print(Panel(Markdown(help_text), title="Help", border_style="cyan"))
+    console.print(Panel(help_text, title="Help", border_style="cyan"))
 
 
 @click.command()

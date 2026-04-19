@@ -17,7 +17,6 @@ function waitForYouTube() {
 
 // Create the command interface
 function createCommandBox() {
-  // Check if already exists
   if (document.getElementById('yt-ai-agent')) {
     return;
   }
@@ -49,8 +48,6 @@ function createCommandBox() {
   `;
 
   document.body.appendChild(container);
-
-  // Set up event listeners
   setupEventListeners();
 }
 
@@ -61,7 +58,6 @@ function setupEventListeners() {
   const toggle = document.getElementById('yt-ai-toggle');
   const suggestions = document.querySelectorAll('.yt-ai-suggestion');
 
-  // Toggle expand/collapse
   toggle.addEventListener('click', () => {
     const content = document.getElementById('yt-ai-content');
     const isHidden = content.style.display === 'none';
@@ -69,7 +65,6 @@ function setupEventListeners() {
     toggle.textContent = isHidden ? '▼' : '▲';
   });
 
-  // Send command on button click
   sendBtn.addEventListener('click', () => {
     const command = input.value.trim();
     if (command) {
@@ -78,7 +73,6 @@ function setupEventListeners() {
     }
   });
 
-  // Send command on Enter key
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       const command = input.value.trim();
@@ -89,7 +83,6 @@ function setupEventListeners() {
     }
   });
 
-  // Handle suggestion clicks
   suggestions.forEach(btn => {
     btn.addEventListener('click', () => {
       input.value = btn.textContent;
@@ -98,7 +91,6 @@ function setupEventListeners() {
     });
   });
 
-  // Close on Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       const content = document.getElementById('yt-ai-content');
@@ -114,7 +106,6 @@ async function handleCommand(command) {
   updateStatus('Processing...', 'loading');
 
   try {
-    // Send command to background script for AI processing
     const response = await chrome.runtime.sendMessage({
       type: 'PROCESS_COMMAND',
       command: command
@@ -122,8 +113,6 @@ async function handleCommand(command) {
 
     if (response.success) {
       updateStatus(response.message, 'success');
-
-      // Execute the search on YouTube
       if (response.searchQuery) {
         searchAndPlayYouTube(response.searchQuery);
       }
@@ -139,58 +128,62 @@ async function handleCommand(command) {
 // Update status message
 function updateStatus(message, type = 'info') {
   const status = document.getElementById('yt-ai-status');
+  if (!status) return;
   status.textContent = message;
   status.className = 'yt-ai-status ' + type;
 
-  // Clear status after 5 seconds for success/error
   if (type === 'success' || type === 'error') {
     setTimeout(() => {
-      status.textContent = 'Ready - Type a command!';
-      status.className = 'yt-ai-status';
+      if (status) {
+        status.textContent = 'Ready - Type a command!';
+        status.className = 'yt-ai-status';
+      }
     }, 5000);
   }
 }
 
-// Search and play on YouTube
+// Navigate to YouTube search and store auto-play intent for the new page
 function searchAndPlayYouTube(query) {
-  console.log('🔍 Searching YouTube for:', query);
+  chrome.storage.local.set({ autoPlay: true, autoPlayQuery: query });
+  window.location.href = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+}
 
-  // Navigate to YouTube search
-  const searchUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
-
-  if (window.location.href.includes('/watch')) {
-    // If on a video page, open in same tab
-    window.location.href = searchUrl;
-  } else {
-    // Navigate to search results
-    window.location.href = searchUrl;
-  }
-
-  // Wait for search results and play first video
-  setTimeout(() => {
+// Poll for the first search result and click it (runs on the search results page)
+function waitForFirstVideoAndPlay() {
+  let attempts = 0;
+  const interval = setInterval(() => {
     const firstVideo = document.querySelector('ytd-video-renderer a#video-title');
     if (firstVideo) {
-      updateStatus('Playing: ' + firstVideo.textContent, 'success');
+      clearInterval(interval);
+      updateStatus('Playing: ' + firstVideo.textContent.trim(), 'success');
       firstVideo.click();
+    } else if (++attempts >= 20) {
+      clearInterval(interval);
+      updateStatus('Could not auto-play. Click a video to start.', 'error');
     }
-  }, 1500);
+  }, 500);
 }
 
 // Initialize when YouTube is ready
-waitForYouTube().then(() => {
+waitForYouTube().then(async () => {
   console.log('✅ YouTube loaded, creating command box...');
   createCommandBox();
 
-  // Show welcome message
-  setTimeout(() => {
-    updateStatus('AI Agent ready! Press K to focus command box.', 'success');
-  }, 1000);
+  // Check for pending auto-play stored by the previous page before it navigated
+  const { autoPlay } = await chrome.storage.local.get(['autoPlay']);
+  if (autoPlay) {
+    await chrome.storage.local.remove(['autoPlay', 'autoPlayQuery']);
+    waitForFirstVideoAndPlay();
+  } else {
+    setTimeout(() => {
+      updateStatus('AI Agent ready! Press ` (backtick) to open.', 'success');
+    }, 1000);
+  }
 });
 
-// Keyboard shortcut: K to focus command box
+// Keyboard shortcut: backtick (`) to focus command box — avoids YouTube's k/j/l conflicts
 document.addEventListener('keydown', (e) => {
-  // Only if not typing in another input
-  if (e.key === 'k' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+  if (e.key === '`' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
     e.preventDefault();
     const input = document.getElementById('yt-ai-input');
     const content = document.getElementById('yt-ai-content');
