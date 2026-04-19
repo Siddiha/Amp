@@ -41,7 +41,7 @@ class LLMConfig:
 
     # Anthropic Claude (primary)
     anthropic_api_key: str = ""
-    anthropic_model: str = "claude-sonnet-4-5-20250929"
+    anthropic_model: str = "claude-sonnet-4-6"
     anthropic_max_tokens: int = 300
     anthropic_temperature: float = 0.7
 

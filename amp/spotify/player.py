@@ -138,6 +138,8 @@ class SpotifyPlayer:
             params = {"limit": limit}
             if seed_tracks:
                 params["seed_tracks"] = seed_tracks
+            else:
+                params["seed_genres"] = ["pop"]
 
             if mood:
                 mood_params = get_mood_features(mood)
