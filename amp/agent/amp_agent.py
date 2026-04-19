@@ -92,15 +92,15 @@ If unsure, ask for clarification. Be concise in responses."""
             tracks = self.spotify.search(args["query"])
             if tracks:
                 return "\n".join(
-                    f"  {i+1}. {t['name']} - {t['artists']}"
+                    f"  {i+1}. {t.name} - {t.artists_str}"
                     for i, t in enumerate(tracks)
                 )
             return "No results found"
         elif name == "get_now_playing":
             track = self.spotify.get_current_track()
             if track:
-                status = "Playing" if track["is_playing"] else "Paused"
-                return f"{status}: {track['name']} by {track['artists']}"
+                status = "Playing" if track.is_playing else "Paused"
+                return f"{status}: {track.name} by {track.artists_str}"
             return "Nothing playing"
         elif name == "set_volume":
             return self.spotify.set_volume(args["volume"])
@@ -110,7 +110,7 @@ If unsure, ask for clarification. Be concise in responses."""
             tracks = self.spotify.get_recommendations(args.get("mood"))
             if tracks:
                 return "Recommendations:\n" + "\n".join(
-                    f"  - {t['name']} - {t['artists']}" for t in tracks
+                    f"  - {t.name} - {t.artists_str}" for t in tracks
                 )
             return "Couldn't get recommendations"
         elif name == "create_playlist":
