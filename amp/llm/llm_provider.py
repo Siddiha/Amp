@@ -84,7 +84,7 @@ TOOLS = [
             "properties": {
                 "mood": {
                     "type": "string",
-                    "enum": ["happy", "sad", "chill", "energetic", "focus", "party", "workout", "sleep"]
+                    "enum": ["happy", "sad", "chill", "energetic", "focus", "party", "workout", "sleep", "romantic", "angry", "melancholic"]
                 }
             }
         }

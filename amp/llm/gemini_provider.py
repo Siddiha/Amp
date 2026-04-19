@@ -86,7 +86,7 @@ TOOLS = [
                 "mood": types.Schema(
                     type="STRING",
                     description="Mood category",
-                    enum=["happy", "sad", "chill", "energetic", "focus", "party", "workout", "sleep"],
+                    enum=["happy", "sad", "chill", "energetic", "focus", "party", "workout", "sleep", "romantic", "angry", "melancholic"],
                 )
             },
         ),
