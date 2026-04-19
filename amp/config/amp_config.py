@@ -8,7 +8,10 @@ from typing import Optional, Dict, Any
 try:
     import tomli
 except ImportError:
-    tomli = None
+    try:
+        import tomllib as tomli  # stdlib in Python 3.11+
+    except ImportError:
+        tomli = None
 
 from dotenv import load_dotenv
 
