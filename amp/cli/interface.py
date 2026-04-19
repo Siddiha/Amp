@@ -130,17 +130,17 @@ def create_now_playing(spotify: Union[SpotifyPlayer, YouTubePlayer]) -> Panel:
     """Create now playing display."""
     track = spotify.get_current_track()
     if track:
-        status = "Now Playing" if track["is_playing"] else "Paused"
-        progress = track["progress_ms"] / track["duration_ms"] if track["duration_ms"] else 0
+        status = "Now Playing" if track.is_playing else "Paused"
+        progress = track.progress_ms / track.duration_ms if track.duration_ms else 0
         bar_width = 30
         filled = int(progress * bar_width)
         filled = max(0, min(bar_width - 1, filled))
         bar = "━" * filled + "○" + "─" * (bar_width - filled - 1)
 
         content = Text()
-        content.append(f"{status}\n", style="bold green" if track["is_playing"] else "bold yellow")
-        content.append(f"{track['name']}\n", style="bold white")
-        content.append(f"{track['artists']}\n", style="dim")
+        content.append(f"{status}\n", style="bold green" if track.is_playing else "bold yellow")
+        content.append(f"{track.name}\n", style="bold white")
+        content.append(f"{track.artists_str}\n", style="dim")
         content.append(f"[{bar}]", style="magenta")
 
         return Panel(content, title="Now Playing", box=box.ROUNDED, border_style="green")
