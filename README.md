@@ -1,4 +1,4 @@
-# 🎵 AMP — AI Music Player
+#  AMP — AI Music Player
 
 Your intelligent music assistant. Just type what you want — AMP understands and acts!
 
