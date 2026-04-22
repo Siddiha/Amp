@@ -2,13 +2,6 @@
 
 Your intelligent music assistant. Just type what you want — AMP understands and acts!
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square)
-![Spotify](https://img.shields.io/badge/Spotify-API-1DB954?style=flat-square)
-![YouTube Music](https://img.shields.io/badge/YouTube-Music-FF0000?style=flat-square)
-![Gemini](https://img.shields.io/badge/Gemini-Free-4285F4?style=flat-square)
-![GroqAI](https://img.shields.io/badge/Groq-Fast-orange?style=flat-square)
-![Claude](https://img.shields.io/badge/Claude-Anthropic-purple?style=flat-square)
-
 ---
 
 ## ✨ Features
