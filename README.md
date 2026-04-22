@@ -2,8 +2,6 @@
 
 Your intelligent music assistant. Just type what you want — AMP understands and acts!
 
----
-
 ## ✨ Features
 
 - **Natural Language Control** — say "play something chill" or "skip this, too slow"
