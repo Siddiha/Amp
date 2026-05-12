@@ -198,8 +198,9 @@ Amp/
 
 ## 📝 License
 
+
 MIT — do whatever you want with it!
 
 ---
 
-Made with 🎵 by AMP Team
+Siddiha
