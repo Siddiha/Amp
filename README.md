@@ -45,7 +45,7 @@ python amp.py "play lofi beats"
 
 ---
 
-## 🔑 API Keys
+## API Keys
 
 ### Music Provider
 
