@@ -16,7 +16,7 @@ Your intelligent music assistant. Just type what you want — AMP understands an
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Install
 
