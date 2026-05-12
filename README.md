@@ -2,7 +2,7 @@
 
 Your intelligent music assistant. Just type what you want — AMP understands and acts!
 
-## ✨ Features
+##  Features
 
 - **Natural Language Control** — say "play something chill" or "skip this, too slow"
 - **Multiple Music Sources** — Spotify (full control) or YouTube Music (browser-based)
